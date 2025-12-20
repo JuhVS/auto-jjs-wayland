@@ -46,6 +46,10 @@ class ConfigManager:
             "max_delay": 5.0
         },
         "auto_jumping": False,
+        "international_support": {
+            "enabled": True,
+            "use_ascii_fallbacks": True
+        },
         "debug": {
             "level": 0,
             "show_index": True,
@@ -161,6 +165,12 @@ class ConfigManager:
     
     def is_auto_jumping(self) -> bool:
         return self.get('auto_jumping', False)
+    
+    def is_international_support_enabled(self) -> bool:
+        return self.get('international_support.enabled', True)
+    
+    def use_ascii_fallbacks(self) -> bool:
+        return self.get('international_support.use_ascii_fallbacks', True)
     
     def is_debug_enabled(self) -> bool:
         return self.get('debug.verbose', False)

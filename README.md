@@ -141,12 +141,12 @@ AutoJJs/
 
 ## Jack Styles
 
-### JJs (Jack Sentences)
+### JJs (Jumping Jacks)
 - Sentence-style output
 - Capitalized first letter
 - Configurable ending (., !, or none)
 
-**Example**: `One hundred twenty-two.`
+**Example**: `ONE HUNDRED TWENTY-TWO.`
 
 ### HJs (Hell Jacks)
 - Letter-by-letter typing
@@ -165,7 +165,7 @@ AutoJJs/
 - Configurable ending (. or !)
 - Case options (upper, lower, normal)
 
-**Example**: `one hundred twenty-two.`
+**Example**: `One Hundred Twenty-Two.`
 
 ## Configuration
 
