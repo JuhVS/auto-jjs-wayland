@@ -18,23 +18,26 @@
       "type": "shift_r"
     }
   },
+  "auto_jumping": true,
   "automatic_mode": {
     "enabled": false,
-    "min_delay": 2.0,
-    "max_delay": 5.0
+    "min_delay": 1.0,
+    "max_delay": 2.0
   },
+
   "styles": {
     "JJs": {
       "ending": ".",
-      "case": "capitalize"
+      "case": "upper"
     },
     "HJs": {
       "ending": "!",
-      "case": "normal"
+      "case": "normal",
+      "add_full_number": true
     },
     "GJs": {
       "ending": ".",
-      "case": "normal"
+      "case": "capitalize"
     }
   },
   "debug": {

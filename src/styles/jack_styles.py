@@ -27,8 +27,8 @@ class JJsStyle(JackStyle):
             formatted = text.upper()
         elif case_rule == 'lower':
             formatted = text.lower()
-        else:  # capitalize
-            formatted = text.capitalize()
+        else:  # capitalize - capitalize each word
+            formatted = ' '.join(word.capitalize() for word in text.split())
         
         return [formatted + ending]
 
@@ -40,10 +40,12 @@ class HJsStyle(JackStyle):
     def format(self, text: str) -> List[str]:
         ending = self.config.get('ending', '!')
         case_rule = self.config.get('case', 'normal')
+        add_full_number = self.config.get('add_full_number', True)
         uppercase = case_rule == 'upper'
         
         result = []
         
+        # Process each character
         for char in text:
             if char == '-':
                 continue
@@ -55,6 +57,11 @@ class HJsStyle(JackStyle):
                 else:
                     result.append(char.upper() + ending)
         
+        # Add full number at the end if enabled
+        if add_full_number:
+            full_number = text.upper().replace('-', '').replace(' ', '')
+            result.append(full_number + '!')
+        
         return result
 
 
@@ -64,12 +71,14 @@ class GJsStyle(JackStyle):
     
     def format(self, text: str) -> List[str]:
         ending = self.config.get('ending', '.')
-        case_rule = self.config.get('case', 'normal')
+        case_rule = self.config.get('case', 'capitalize')
         
         if case_rule == 'upper':
             formatted = text.upper()
         elif case_rule == 'lower':
             formatted = text.lower()
+        elif case_rule == 'capitalize':
+            formatted = ' '.join(word.capitalize() for word in text.split())
         else:  # normal
             formatted = text
         

@@ -150,12 +150,14 @@ AutoJJs/
 
 ### HJs (Hell Jacks)
 - Letter-by-letter typing
-- Hyphens ignored for character count
+- Hyphens and spaces ignored for character count
 - Uppercase or normal case
 - Configurable ending
+- Optional full number at end
 
 **Examples**: 
 - `O!` `N!` `E!` (letter-by-letter)
+- `O!` `N!` `E!` `ONE!` (with add_full_number enabled)
 - `ONE!` (full uppercase)
 
 ### GJs (Grammar Jacks)
@@ -190,6 +192,7 @@ The system uses a `config.json` file (auto-created on first run):
       "type": "shift_r"
     }
   },
+  "auto_jumping": false,
   "automatic_mode": {
     "enabled": false,
     "min_delay": 2.0,
@@ -202,11 +205,12 @@ The system uses a `config.json` file (auto-created on first run):
     },
     "HJs": {
       "ending": "!",
-      "case": "normal"
+      "case": "normal",
+      "add_full_number": true
     },
     "GJs": {
       "ending": ".",
-      "case": "normal"
+      "case": "capitalize"
     }
   },
   "debug": {
@@ -217,6 +221,31 @@ The system uses a `config.json` file (auto-created on first run):
     "show_keys": false
   }
 }
+```
+
+### Configuration Options
+
+#### Navigation
+- **type**: Regular character key for typing (e.g., ".")
+- **special_keys.type**: Special key name (e.g., "shift_r", "ctrl_l")
+
+#### Auto-Jumping
+- **auto_jumping**: When true, presses space, waits 100ms, then types (default: false)
+
+#### Automatic Mode
+- **enabled**: Enable/disable automatic typing mode
+- **min_delay/max_delay**: Random delay range between auto-typings (seconds)
+
+#### HJs Style Options
+- **add_full_number**: When true, adds full number at end after letter-by-letter (default: true)
+
+#### Debug Levels
+- **0**: No debug output
+- **1**: Basic debug (errors, auto mode timing)
+- **2**: Detailed debug (includes key detection)
+
+#### Special Key Names
+Common special keys: `shift_r`, `shift_l`, `ctrl_r`, `ctrl_l`, `alt_r`, `alt_l`, `cmd_r`, `cmd_l`, `caps_lock`, `esc`, `space`, `enter`, `backspace`, `tab`, `delete`, `home`, `end`, `page_up`, `page_down`, `insert`, `num_lock`, `pause`, `scroll_lock`, `up`, `down`, `left`, `right`
 ```
 
 ### Configuration Options

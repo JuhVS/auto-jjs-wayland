@@ -90,7 +90,7 @@ class KeyboardSimulator:
             '-': 'KEY_MINUS', '=': 'KEY_EQUAL', '[': 'KEY_LEFTBRACE',
             ']': 'KEY_RIGHTBRACE', ';': 'KEY_SEMICOLON', "'": 'KEY_APOSTROPHE',
             '`': 'KEY_GRAVE', '\\': 'KEY_BACKSLASH', ',': 'KEY_COMMA',
-            '.': 'KEY_DOT'
+            '.': 'KEY_DOT', '!': 'KEY_1', '?': 'KEY_SLASH'
         }
         
         key_name = key_map.get(char)
@@ -114,6 +114,12 @@ class KeyboardSimulator:
                     if key:
                         shift_needed = char.isupper() and char.isalpha()
                         
+                        # Special handling for ! and ?
+                        if char == '!':
+                            shift_needed = True
+                        elif char == '?':
+                            shift_needed = True
+                        
                         if shift_needed:
                             self.device.emit(uinput.KEY_LEFTSHIFT, 1)
                         
@@ -122,8 +128,8 @@ class KeyboardSimulator:
                         
                         if shift_needed:
                             self.device.emit(uinput.KEY_LEFTSHIFT, 0)
-                    else:
-                        print(f"Warning: Cannot type character '{char}'")
+                        else:
+                            print(f"Warning: Cannot type character '{char}'")
                 
                 time.sleep(char_delay)
     
@@ -160,14 +166,18 @@ class KeyboardSimulator:
             if key:
                 self.press_key(key, delay)
     
-    def type_sequence(self, text: str, config: Dict[str, Any]):
+    def type_sequence(self, text: str, config: Dict[str, Any], auto_jumping: bool = False):
         prefix_delay = config.get('prefix_delay', 0.1)
         char_delay = config.get('char_delay', 0.05)
         enter_delay = config.get('enter_delay', 0.2)
         space_delay = config.get('space_delay', 0.2)
         prefix_key = config.get('prefix_key', '/')
         
+        if auto_jumping:
+            self.press_space(0.2)  # Press space
+            time.sleep(0.2)         # Wait 200ms
+        
         self.press_prefix(prefix_key, prefix_delay)
+        
         self.type_text(text, char_delay)
         self.press_enter(enter_delay)
-        self.press_space(space_delay)

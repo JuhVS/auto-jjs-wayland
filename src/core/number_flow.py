@@ -121,6 +121,16 @@ class NumberFlow:
         type_special = special_keys.get('type')
         if type_special:
             print(f"  {type_special} - Type current number {'(auto mode)' if auto_mode else ''}")
+        
+        # Show additional feature status
+        auto_jumping = self.config.is_auto_jumping()
+        print(f"\nFeatures:")
+        print(f"  Auto Mode: {'Enabled' if auto_mode else 'Disabled'}")
+        print(f"  Auto-Jumping: {'Enabled' if auto_jumping else 'Disabled'}")
+        
+        if auto_jumping:
+            print(f"  (Space + 100ms delay will be added to typing)")
+        
         print(f"\nPress ESC, Ctrl+C or {nav_config['quit']} to stop...")
         
         def on_press(key):
@@ -288,6 +298,7 @@ class NumberFlow:
             print(f"Formatted as: {formatted_lines[0]}")
         
         delays = self.config.get_delays()
+        auto_jumping = self.config.is_auto_jumping()
         typing_config = {
             'prefix_key': self.config.get_prefix_key(),
             'prefix_delay': delays['prefix'],
@@ -297,7 +308,7 @@ class NumberFlow:
         }
         
         for line in formatted_lines:
-            self.keyboard.type_sequence(line, typing_config)
+            self.keyboard.type_sequence(line, typing_config, auto_jumping)
             time.sleep(0.1)
         
         self._next_number()

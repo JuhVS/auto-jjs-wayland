@@ -32,7 +32,8 @@ class ConfigManager:
             },
             "HJs": {
                 "ending": "!",
-                "case": "normal"
+                "case": "normal",
+                "add_full_number": True
             },
             "GJs": {
                 "ending": ".",
@@ -44,6 +45,7 @@ class ConfigManager:
             "min_delay": 2.0,
             "max_delay": 5.0
         },
+        "auto_jumping": False,
         "debug": {
             "level": 0,
             "show_index": True,
@@ -156,6 +158,9 @@ class ConfigManager:
     
     def should_show_keys(self) -> bool:
         return self.get('debug.show_keys', False)
+    
+    def is_auto_jumping(self) -> bool:
+        return self.get('auto_jumping', False)
     
     def is_debug_enabled(self) -> bool:
         return self.get('debug.verbose', False)
