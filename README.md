@@ -1,6 +1,6 @@
-# AutoJJs - Auto-typing Jack System
+# Mei's AutoJJs - Fully Customizable Auto-typing Jacks System (EN / PT-BR)
 
-A modular Python system for Linux Wayland that uses the **uinput kernel module** to simulate keyboard input for typing numbers written in text form across unlimited languages.
+[BETA] A Python system for Linux Wayland that uses the **uinput kernel module** to simulate keyboard input for typing numbers written in text form across unlimited languages.
 
 ## Features
 
@@ -42,13 +42,13 @@ A modular Python system for Linux Wayland that uses the **uinput kernel module**
    
    **Note**: If pynput installation fails on your system, you may need to:
    ```bash
-   # Option 1: System package manager
+   # Option 1: System package manager (not tested)
    pacman -S python-pynput
    
    # Option 2: Override protection (not recommended)
    pip install pynput --break-system-packages
    
-   # Option 3: Virtual environment
+   # Option 3: Virtual environment (recommended and tested)
    python -m venv venv && source venv/bin/activate && pip install pynput
    ```
 
@@ -347,6 +347,16 @@ If global key detection doesn't work on Wayland:
 2. Try running with XWayland if available
 3. Use terminal mode as fallback
 4. Check Wayland compositor permissions
+
+Tip: You can try using Right Shift (shift_r) as a special key.
+For example, pressing Alt + key (= is the default) might work depending on your global key settings.
+
+On KDE, you can adjust this in System Settings → Shortcuts → Global Shortcuts:
+- Enable the option “Any key pressed while Ctrl, Alt, or Meta is also pressed”
+- Or just set it to “Always allowed”
+
+This way, your global key detection should behave consistently across Wayland sessions.
+
 
 ## Development
 
