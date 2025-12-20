@@ -19,7 +19,8 @@ except ImportError:
 class NumberFlow:
     def __init__(self, config_manager: ConfigManager):
         self.config = config_manager
-        self.keyboard = KeyboardSimulator()
+        debug_level = config_manager.get_debug_level() if hasattr(config_manager, 'get_debug_level') else 0
+        self.keyboard = KeyboardSimulator(debug_level)
         self.language_manager = LanguageManager()
         self.style_manager = StyleManager()
         

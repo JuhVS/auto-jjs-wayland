@@ -19,6 +19,10 @@
     }
   },
   "auto_jumping": true,
+  "international_support": {
+    "enabled": true,
+    "use_ascii_fallbacks": false
+  },
   "automatic_mode": {
     "enabled": false,
     "min_delay": 1.0,

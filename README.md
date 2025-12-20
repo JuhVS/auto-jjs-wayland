@@ -4,8 +4,8 @@
 
 ## Features
 
-- **Modular Architecture**: Clean, extensible design with separate components for keyboard input, language management, styling, and configuration
-- **Unlimited Languages**: Add new languages by simply creating folders with JSON files - no code changes needed
+- **Unlimited Languages**: Add new languages by simply creating folders with JSON files - no code changes needed.
+Warnings: Only roman characters were tested, other alphabets might not work. Also, a few graphical accents might not work (instead of Ê, we write E). I am not able to figure out how to solve this using the module uinput.
 - **Multiple Jack Styles**: JJs (sentence), HJs (letter-by-letter), and GJs (normal) with configurable formatting
 - **Wayland Compatible**: Uses python-uinput for kernel-level keyboard simulation
 - **Global Key Detection**: Uses pynput for system-wide key detection (works across all applications)
@@ -169,7 +169,7 @@ AutoJJs/
 
 ## Configuration
 
-The system uses a `config.json` file (auto-created on first run):
+The system uses a `config.json` file (you can temporary override it using the parser arguments or just change it directly in the config file):
 
 ```json
 {
@@ -187,21 +187,26 @@ The system uses a `config.json` file (auto-created on first run):
     "previous": "p",
     "jump": "j",
     "quit": "q",
-    "type": ".",
+    "type": "=",
     "special_keys": {
       "type": "shift_r"
     }
   },
-  "auto_jumping": false,
+  "auto_jumping": true,
+  "international_support": {
+    "enabled": true,
+    "use_ascii_fallbacks": true
+  },
   "automatic_mode": {
     "enabled": false,
-    "min_delay": 2.0,
-    "max_delay": 5.0
+    "min_delay": 1.0,
+    "max_delay": 2.0
   },
+
   "styles": {
     "JJs": {
       "ending": ".",
-      "case": "capitalize"
+      "case": "upper"
     },
     "HJs": {
       "ending": "!",
@@ -221,6 +226,7 @@ The system uses a `config.json` file (auto-created on first run):
     "show_keys": false
   }
 }
+
 ```
 
 ### Configuration Options
@@ -238,6 +244,19 @@ The system uses a `config.json` file (auto-created on first run):
 
 #### HJs Style Options
 - **add_full_number**: When true, adds full number at end after letter-by-letter (default: true)
+
+#### International Support
+- **enabled**: Enable international character support (default: true)
+- **use_ascii_fallbacks**: Convert accented characters to ASCII equivalents (default: true)
+  - `Três` → `Tres`
+  - `Çois` → `Cois`
+  - `Á` → `A`
+  - `É` → `E`
+  - `Í` → `I`
+  - `Ó` → `O`
+  - `Ú` → `U`
+  - `Ñ` → `N`
+  - And many more...
 
 #### Debug Levels
 - **0**: No debug output
