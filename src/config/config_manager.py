@@ -20,7 +20,10 @@ class ConfigManager:
             "previous": "p",
             "jump": "j",
             "quit": "q",
-            "type": "."
+            "type": ".",
+            "special_keys": {
+                "type": "shift_r"
+            }
         },
         "styles": {
             "JJs": {
@@ -36,10 +39,17 @@ class ConfigManager:
                 "case": "normal"
             }
         },
+        "automatic_mode": {
+            "enabled": False,
+            "min_delay": 2.0,
+            "max_delay": 5.0
+        },
         "debug": {
+            "level": 0,
             "show_index": True,
             "show_formatted": True,
-            "verbose": False
+            "verbose": False,
+            "show_keys": False
         }
     }
     
@@ -129,6 +139,23 @@ class ConfigManager:
     
     def get_type_key(self) -> str:
         return self.get('navigation.type', '.')
+    
+    def is_automatic_mode(self) -> bool:
+        return self.get('automatic_mode.enabled', False)
+    
+    def get_automatic_delays(self) -> tuple:
+        min_delay = self.get('automatic_mode.min_delay', 2.0)
+        max_delay = self.get('automatic_mode.max_delay', 5.0)
+        return min_delay, max_delay
+    
+    def get_debug_level(self) -> int:
+        return self.get('debug.level', 0)
+    
+    def is_debug_level(self, level: int) -> bool:
+        return self.get_debug_level() >= level
+    
+    def should_show_keys(self) -> bool:
+        return self.get('debug.show_keys', False)
     
     def is_debug_enabled(self) -> bool:
         return self.get('debug.verbose', False)

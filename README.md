@@ -127,7 +127,7 @@ AutoJJs/
 
 **Example**: `One hundred twenty-two.`
 
-### HJs (Hyphen Jacks)
+### HJs (Hell Jacks)
 - Letter-by-letter typing
 - Hyphens ignored for character count
 - Uppercase or normal case
@@ -137,7 +137,7 @@ AutoJJs/
 - `O!` `N!` `E!` (letter-by-letter)
 - `ONE!` (full uppercase)
 
-### GJs (Ground Jacks)
+### GJs (Grammar Jacks)
 - Normal sentence output
 - Configurable ending (. or !)
 - Case options (upper, lower, normal)
@@ -267,15 +267,3 @@ class CustomStyle(JackStyle):
         # Your formatting logic here
         return [formatted_text]
 ```
-
-## License
-
-[Your License Here]
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request

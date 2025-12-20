@@ -9,6 +9,13 @@ except ImportError:
     uinput = None
     UINPUT_AVAILABLE = False
 
+try:
+    from pynput import keyboard
+    PYNPUT_AVAILABLE = True
+except ImportError:
+    keyboard = None
+    PYNPUT_AVAILABLE = False
+
 
 class KeyboardSimulator:
     def __init__(self):

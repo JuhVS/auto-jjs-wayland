@@ -8,6 +8,13 @@ from src.config.config_manager import ConfigManager
 from src.core.number_flow import NumberFlow
 from src.core.language_manager import LanguageManager
 
+try:
+    from pynput import keyboard
+    PYNPUT_AVAILABLE = True
+except ImportError:
+    keyboard = None
+    PYNPUT_AVAILABLE = False
+
 
 def main():
     parser = argparse.ArgumentParser(
@@ -20,6 +27,8 @@ Examples:
   %(prog)s -s HJs           # Start with HJs style
   %(prog)s --list-languages  # Show available languages
   %(prog)s --validate       # Validate current configuration
+  %(prog)s --debug 1        # Enable basic debug mode
+  %(prog)s --debug 2        # Enable detailed debug with key detection
         """
     )
     
@@ -35,8 +44,8 @@ Examples:
                        help='List all available languages and exit')
     parser.add_argument('--validate', action='store_true',
                        help='Validate configuration and language files')
-    parser.add_argument('--debug', action='store_true',
-                       help='Enable debug mode')
+    parser.add_argument('--debug', type=int, choices=[1, 2], metavar='LEVEL',
+                        help='Enable debug mode (1=basic, 2=detailed with key detection)')
     
     args = parser.parse_args()
     
@@ -44,7 +53,10 @@ Examples:
         config = ConfigManager(args.config)
         
         if args.debug:
+            config.set('debug.level', args.debug)
             config.set('debug.verbose', True)
+            if args.debug >= 2:
+                config.set('debug.show_keys', True)
         
         if args.validate:
             return validate_system(config)
@@ -66,6 +78,12 @@ Examples:
             return 1
         
         flow = NumberFlow(config)
+        
+        if not PYNPUT_AVAILABLE:
+            print("Note: pynput not available. Global key detection disabled.")
+            print("Install with: pip install pynput")
+            print("Or run in terminal mode only.\n")
+        
         flow.start()
         
         return 0

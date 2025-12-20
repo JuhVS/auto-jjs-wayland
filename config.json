@@ -13,7 +13,15 @@
     "previous": "p",
     "jump": "j",
     "quit": "q",
-    "type": "."
+    "type": "=",
+    "special_keys": {
+      "type": "shift_r"
+    }
+  },
+  "automatic_mode": {
+    "enabled": false,
+    "min_delay": 2.0,
+    "max_delay": 5.0
   },
   "styles": {
     "JJs": {
@@ -30,8 +38,10 @@
     }
   },
   "debug": {
+    "level": 0,
     "show_index": true,
     "show_formatted": true,
-    "verbose": false
+    "verbose": false,
+    "show_keys": false
   }
 }
