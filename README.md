@@ -8,8 +8,11 @@ A modular Python system for Linux Wayland that uses the **uinput kernel module**
 - **Unlimited Languages**: Add new languages by simply creating folders with JSON files - no code changes needed
 - **Multiple Jack Styles**: JJs (sentence), HJs (letter-by-letter), and GJs (normal) with configurable formatting
 - **Wayland Compatible**: Uses python-uinput for kernel-level keyboard simulation
+- **Global Key Detection**: Uses pynput for system-wide key detection (works across all applications)
+- **Automatic Mode**: Configurable auto-typing with random delays
 - **Interactive Navigation**: Full control over number flow with next/previous/jump commands
 - **Configuration Driven**: All settings configurable via JSON file
+- **Debug Levels**: Multiple debug levels for troubleshooting
 
 ## Quick Start
 
@@ -36,6 +39,18 @@ A modular Python system for Linux Wayland that uses the **uinput kernel module**
    ```bash
    pip install -r requirements.txt
    ```
+   
+   **Note**: If pynput installation fails on your system, you may need to:
+   ```bash
+   # Option 1: System package manager
+   pacman -S python-pynput
+   
+   # Option 2: Override protection (not recommended)
+   pip install pynput --break-system-packages
+   
+   # Option 3: Virtual environment
+   python -m venv venv && source venv/bin/activate && pip install pynput
+   ```
 
 3. Make the main script executable:
    ```bash
@@ -52,6 +67,12 @@ Start with default settings (English language, JJs style):
 Use different language or style:
 ```bash
 ./main.py -l ptbr -s HJs
+```
+
+Enable debug mode:
+```bash
+./main.py --debug 1          # Basic debug
+./main.py --debug 2          # Detailed debug with key detection
 ```
 
 List available languages:
@@ -163,7 +184,16 @@ The system uses a `config.json` file (auto-created on first run):
     "next": "n",
     "previous": "p",
     "jump": "j",
-    "quit": "q"
+    "quit": "q",
+    "type": ".",
+    "special_keys": {
+      "type": "shift_r"
+    }
+  },
+  "automatic_mode": {
+    "enabled": false,
+    "min_delay": 2.0,
+    "max_delay": 5.0
   },
   "styles": {
     "JJs": {
@@ -180,28 +210,69 @@ The system uses a `config.json` file (auto-created on first run):
     }
   },
   "debug": {
+    "level": 0,
     "show_index": true,
     "show_formatted": true,
-    "verbose": false
+    "verbose": false,
+    "show_keys": false
   }
 }
 ```
 
+### Configuration Options
+
+#### Navigation
+- **type**: Regular character key for typing (e.g., ".")
+- **special_keys.type**: Special key name (e.g., "shift_r", "ctrl_l")
+
+#### Automatic Mode
+- **enabled**: Enable/disable automatic typing mode
+- **min_delay/max_delay**: Random delay range between auto-typings (seconds)
+
+#### Debug Levels
+- **0**: No debug output
+- **1**: Basic debug (errors, auto mode timing)
+- **2**: Detailed debug (includes key detection)
+
+#### Special Key Names
+Common special keys: `shift_r`, `shift_l`, `ctrl_r`, `ctrl_l`, `alt_r`, `alt_l`, `cmd_r`, `cmd_l`, `caps_lock`, `esc`, `space`, `enter`, `backspace`, `tab`, `delete`, `home`, `end`, `page_up`, `page_down`, `insert`, `num_lock`, `pause`, `scroll_lock`, `up`, `down`, `left`, `right`
+
 ## Interactive Controls
 
-When running, use these keys:
+When running, use these keys (press anywhere with pynput installed):
 
-- **Enter**: Type current number with configured style
+### Normal Mode
+- **<type_key>** (default: `.`): Type current number with configured style
 - **n**: Next number
 - **p**: Previous number  
 - **j**: Jump to specific number
 - **q**: Quit
+- **ESC**: Quit (always available)
+
+### Automatic Mode
+When `"automatic_mode.enabled": true`:
+- **<type_key>** (default: `.`): Start automatic typing (types continuously with random delays)
+- **ESC**: Quit (stops automatic typing)
+
+### Special Keys (Optional)
+You can configure special keys like Right Shift in the config:
+```json
+{
+  "navigation": {
+    "special_keys": {
+      "type": "shift_r"    // Right Shift acts as type key
+    }
+  }
+}
+```
+
+Available special keys include: `shift_r`, `shift_l`, `ctrl_r`, `ctrl_l`, `alt_r`, `alt_l`, etc.
 
 ## Command Line Options
 
 ```
 usage: main.py [-h] [-l LANGUAGE] [-s {JJs,HJs,GJs}] [-c CONFIG]
-               [--list-languages] [--validate] [--debug]
+               [--list-languages] [--validate] [--debug LEVEL]
 
 AutoJJs - Auto-typing jack system for Linux Wayland
 
@@ -215,7 +286,7 @@ options:
                         Configuration file path (default: config.json)
   --list-languages      List all available languages and exit
   --validate            Validate configuration and language files
-  --debug               Enable debug mode
+  --debug LEVEL         Enable debug mode (1=basic, 2=detailed with key detection)
 ```
 
 ## Troubleshooting
@@ -237,8 +308,16 @@ languages/your_lang/numbers.json
 ### Debug Mode
 Run with `--debug` flag for detailed error information:
 ```bash
-./main.py --debug
+./main.py --debug 1          # Basic debug
+./main.py --debug 2          # Detailed debug with key detection
 ```
+
+### Global Key Detection Issues
+If global key detection doesn't work on Wayland:
+1. Ensure pynput is installed properly
+2. Try running with XWayland if available
+3. Use terminal mode as fallback
+4. Check Wayland compositor permissions
 
 ## Development
 
