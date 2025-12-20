@@ -1,0 +1,37 @@
+{
+  "language": "en",
+  "prefix_key": "/",
+  "jack_style": "JJs",
+  "delays": {
+    "prefix": 0.1,
+    "character": 0.05,
+    "enter": 0.2,
+    "space": 0.2
+  },
+  "navigation": {
+    "next": "n",
+    "previous": "p",
+    "jump": "j",
+    "quit": "q",
+    "type": "."
+  },
+  "styles": {
+    "JJs": {
+      "ending": ".",
+      "case": "capitalize"
+    },
+    "HJs": {
+      "ending": "!",
+      "case": "normal"
+    },
+    "GJs": {
+      "ending": ".",
+      "case": "normal"
+    }
+  },
+  "debug": {
+    "show_index": true,
+    "show_formatted": true,
+    "verbose": false
+  }
+}
