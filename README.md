@@ -1,5 +1,6 @@
 # Mei's AutoJJs - Fully Customizable Auto-typing Jacks System (EN / PT-BR)
 
+**This software is discontinued and unmaintained.**
 [BETA] A Python system for Linux Wayland that uses the **uinput kernel module** to simulate keyboard input for typing numbers written in text form across unlimited languages.
 
 ## Features
